@@ -1,0 +1,5 @@
+Este es el inicio dle curso de r y python para analisis de datos, esto me permitira
+afianzar un poco mas, mis conocimientos en ciencia de datos, es importante tener en cuenta
+que mediante esyte curso, se podra profundizar mucho mas en el campo de analista de datos.
+
+- cabe destacer que estos archivos son los que tenia guardados desde hace tiempo localmente.
