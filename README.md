@@ -11,3 +11,6 @@ YOU HAVE IT.
 
 -- FIRST COURSE = https://www.udemy.com/course/curso-de-r-y-python-para-data-science-y-analisis-de-datos/?couponCode=ST3MT200225A
 -- SECOND COURSE = https://www.udemy.com/course/python-3-al-completo-desde-cero/?couponCode=ST3MT200225A 
+
+IF YOU WANT BOTH COURSES FREE 
+-- YOU CAN GO ON TELEGRAM ON THE CHANNEL (Recursos compartidos) - search it
