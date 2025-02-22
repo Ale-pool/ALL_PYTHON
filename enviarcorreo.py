@@ -11,16 +11,15 @@ smtp_server = "smtp.gmail.com" # servidor smtp de gmail
 smtp_port = 587 # puerto de gmail
 
 # credenciales de la cuenta de correo
-email_address = "alexvillaQgmail.com"
-email_password = "ALEX121231M"
+email_address = "avila@"
+email_password = "qewe"
 
 
 # crear mensaje
 
 msg = MIMEMultipart()
 msg['From'] = email_address
-msg['To'] = "juanluis@gmail.com"
-
+msg['To'] = "luisjalds@gmail.com"
 msg['subject'] = "Prueba de envio de correo"
 
 # cuerpo del mensaje en html
@@ -30,7 +29,9 @@ html = """
 <html>
    <body>
         <h1> Hola, Como estas </h1>
+        <h2> espero que te encuentres bien </h2>
         <p> Este es un correo de prueba </p>
+        <p> generado automaticamente con python </p>
         <p> Saludos </p>
         <a href="https://alexvillada.neocities.org/"> Ir a mi portafolio</a>
         <p> Esto es un mensaje creado con python, asi que puedes ignoralo </p>
