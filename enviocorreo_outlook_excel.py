@@ -90,6 +90,6 @@ try:
     servidor.sendmail(outlook_address, destinatario, mensaje.as_string())
     print("Correo enviado exitosamente.")
 except Exception as e:
-    print(f"Error al enviar el correo: {e}")
+    print(f"Error al enviar el correo: {str(e)}")
 finally:
     servidor.quit()  # Cerrar la conexión con el servidor
