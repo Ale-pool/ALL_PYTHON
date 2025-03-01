@@ -15,7 +15,7 @@ from docx import Document # esta libreria nos permite manipular archivos word
 
 # configuración del correo:
 
-destinatario = "aheredia@correo.iue.edu.co"   # aheredia@correo.iue.edu.co
+destinatario = "vcanoj@correo.iue.edu.co"   # aheredia@correo.iue.edu.co
 asunto = "Objectivos de proyecto"
 cuerpo_correo = """
 <html>
