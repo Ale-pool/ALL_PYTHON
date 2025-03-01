@@ -15,8 +15,8 @@ from docx import Document # esta libreria nos permite manipular archivos word
 
 # configuración del correo:
 
-destinatario = "avillada@correo.iue.edu.co"   # aheredia@correo.iue.edu.co
-asunto = "Envio de Objectivos"
+destinatario = "aheredia@correo.iue.edu.co"   # aheredia@correo.iue.edu.co
+asunto = "Objectivos de proyecto"
 cuerpo_correo = """
 <html>
 <body>
@@ -24,16 +24,19 @@ cuerpo_correo = """
     <p>Espero que te encuentres bien. Adjunto encontrarás el documento Word con los objetivos.</p>
     <p>Por favor, revisa el archivo y no dudes en contactarme si tienes alguna pregunta.</p>
     <p>Saludos,</p>
+    <p> Envio programado de correo automatizado</p>
+    <p><strong>Agradeceria si me avisaras si te llego el correo</strong></p>
     <p><strong>Alexander Villada</strong></p>
     <p><em>Practicante</em></p>
     <p><em>Bancolombia</em></p>
+
 </body>
 </html>
 """
 
 # ruta del archivo word
 
-ruta_documento = r"" # especifica la ruta del archivo word
+ruta_documento = r'C:\Users\alexv\OneDrive\Escritorio\PRACTICAS_PROFESIONALES\Bancolombia\proyecto\DEFINICION DE OBJECTIVOS PROYECTO.docx'
 
 #crea el correo
 try:
