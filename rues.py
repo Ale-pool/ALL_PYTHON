@@ -61,30 +61,36 @@ class DatosRues:
         try:
             data = WebDriverWait(self.driver, 20).until(
                 EC.presence_of_element_located((By.XPATH, "/html/body/div/main/div[2]/div[2]/div[1]/div/div[2]/div[1]/div"))
-            )
-            print(data.text)
-            info_general['Información General'] = data.text
+            )                                              
+            info_general = data.text
+            print(info_general)
+
+            info_lines = info_general.split('\n')  # Separar la información por líneas
+            data_dic = {}
+            for i in range(0, len(info_lines), 2):   # Recorrer la información general
+                key = info_lines[i].strip()
+                value = info_lines[i+1].strip() if i+ 1 < len(info_lines) else ""
+                data_dic[key] = value
+            
+            # obtener la información de la actividad económica
+            actividad = self.driver.find_element(By.XPATH, "/html/body/div[1]/main/div[2]/div[2]/div[1]/div/div[1]/div[2]/a/span")
+            actividad.click()
+            actingo = self.driver.find_element(By.ID, "detail-tabs-tabpane-pestana_economica")
+            actingo_text = actingo.text
+            print(actingo_text)
+
+            data_dic["Actividad Económica"] = actingo_text
+            columnas = ['Identificación', 'Categoria de la Matrícula','Tipo de Sociedad','Tipo Organización','Cámara de Comercio',
+                        'Número de Matrícula','Fecha de Matrícula','Fecha de Vigencia','Estado de la matrícula',
+                        'Fecha de renovación', 'Último año renovado', 'Fecha de Actualización', 'Emprendimiento Social','Extinción de Dominio', 'Actividad Económica']
+            valores = [data_dic.get(col, '') for col in columnas]
+            df = pd.DataFrame([valores], columns=columnas)
+            df.to_excel('actividad_economica.xlsx', index=False)
         except NoSuchElementException:
             print("No se encontró la información general.")
         
         return info_general
     
-    def extraer_actividad_economica(self):
-        try:
-            actividad = WebDriverWait(self.driver, 20).until(
-                EC.element_to_be_clickable((By.XPATH, "/html/body/div/main/div[2]/div[2]/div[1]/div/div[1]/div[2]/a/span"))
-            )
-            actividad.click()
-            time.sleep(2)
-
-            data = WebDriverWait(self.driver, 20).until(
-                EC.presence_of_element_located((By.XPATH, "/html/body/div/main/div[2]/div[2]/div[1]/div/div[2]/div[2]"))
-            )
-            print(data.text)
-        except NoSuchElementException:
-            print("No se encontró la información de actividad económica.")
-        except TimeoutException:
-            print("No se pudo cargar la información de actividad económica.")
 
     def ejecutar(self):
         self.configuracion_driver()
@@ -92,20 +98,13 @@ class DatosRues:
             self.driver.get(self.url)
             self.remover_aviso()
             self.buscar_nit()
-            info_general = self.extraer_info_general()
-            self.extraer_actividad_economica()
+            self.extraer_info_general()
 
-            if info_general:
-                df = pd.DataFrame(list(info_general.items()), columns=["Campo", "Valor"])
-                df.to_excel('informacion_empresa.xlsx', index=False)
-                print("Información guardada en 'informacion_empresa.xlsx'")
-            else:
-                print("No se pudo extraer la información general.")
         finally:
             self.driver.quit()
 
 if __name__ == "__main__":
-    NIT = int(input("Ingrese el NIT de la empresa a buscar: "))  # NIT de la empresa a buscar
+    NIT = int(input("Ingrese el NIT: "))
     EDGE_DRIVER_PATH = r'C:\WebDriver\msedgedriver.exe'
     url = "https://ruesfront.rues.org.co/"
 
