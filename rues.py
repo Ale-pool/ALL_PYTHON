@@ -104,9 +104,13 @@ class DatosRues:
             self.driver.quit()
 
 if __name__ == "__main__":
-    NIT = int(input("Ingrese el NIT: "))
+    NIT = 800150280
     EDGE_DRIVER_PATH = r'C:\WebDriver\msedgedriver.exe'
     url = "https://ruesfront.rues.org.co/"
 
     scraper = DatosRues(NIT, EDGE_DRIVER_PATH, url)
     scraper.ejecutar()
+
+
+# integrar esto con spark  -para que el excel generado se suba a hue impala
+# manejar una vez se suba a impala con el orquestador de airflow balidado aleres en "radegre"
