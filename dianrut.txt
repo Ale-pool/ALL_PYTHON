@@ -1,0 +1,73 @@
+import undetected_chromedriver as uc
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.keys import Keys 
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium import webdriver
+from selenium.common.exceptions import NoSuchElementException, TimeoutException
+import os
+import pandas as pd
+import time
+
+
+
+nit = 800150280
+
+options = uc.ChromeOptions()
+driver = uc.Chrome(options=options)
+time.sleep(5)
+driver.execute_script("window.open('https://muisca.dian.gov.co/WebRutMuisca/DefConsultaEstadoRUT.faces;jsessionid=CFC77365AD7F9859A905646B25050D7E.nodo30Rutmuisca', '_blank')")
+driver.switch_to.window(driver.window_handles[1])
+time.sleep(12)
+
+try:
+    inicio = WebDriverWait(driver, 40).until(
+        EC.presence_of_element_located((By.ID, "vistaConsultaEstadoRUT:formConsultaEstadoRUT:numNit"))
+    )
+    inicio.send_keys(nit)
+    inicio.send_keys(Keys.RETURN)
+except TimeoutException:
+    print("El tiempo de espera ha sido superado")
+
+#dv
+dv = driver.find_element(By.CLASS_NAME, "tipoFilaNormalVerde")
+dv = dv.text
+
+
+# Inicializar el diccionario con el NIT que utilizaste para la búsqueda
+data = {"NIT": nit, "DV": dv, "Razón Social": None, "Fecha Actual": None, "Estado": None}
+
+try:
+    table = WebDriverWait(driver, 20).until(
+        EC.presence_of_element_located((By.XPATH, '//*[@id="vistaConsultaEstadoRUT:formConsultaEstadoRUT:formulario"]/tbody/tr[2]/td/table'))
+    )
+    rows = table.find_elements(By.TAG_NAME, "tr")
+    for row in rows:
+        cells = row.find_elements(By.TAG_NAME, "td")
+        if len(cells) == 2: # Solo se toman en cuenta las filas con dos celdas
+            key = cells[0].text.strip()
+            value = cells[1].text.strip()
+            if key == "DV":
+                data["DV"] = value
+            elif key == "Razón Social":
+                data["Razón Social"] = value
+            elif key == "Fecha Actual":
+                data["Fecha Actual"] = value
+            elif key == "Estado":
+                data["Estado"] = value
+except TimeoutException:
+    print("El tiempo de espera ha sido superado")
+
+# Crear un DataFrame con los datos
+df = pd.DataFrame([data])
+
+# Guardar el DataFrame en un archivo Excel
+df.to_excel("informacion_rut.xlsx", index=False)
+
+time.sleep(40)
+
+try:
+    driver.quit()
+except Exception as e:
+    print(f"Error al cerrar el navegador: {e}")
